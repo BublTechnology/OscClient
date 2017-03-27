@@ -3,7 +3,7 @@
 var poll = require('../lib/poll');
 var assert = require('assert');
 var sinon = require('sinon');
-var Q = require('Q');
+var Q = require('q');
 
 describe("poll", function () {
   describe("defaults", function () {
@@ -77,7 +77,7 @@ describe("poll", function () {
       }, 100);
     });
 
-    it.only("rejects promise if there is an error object on the response body", function (done) {
+    it("rejects promise if there is an error object on the response body", function (done) {
       var rejectSpy = sinon.spy();
       var resolveSpy = sinon.spy();
       var fakePromiseOne = Q.reject({ error: { message: 'bad error!' } });
@@ -102,7 +102,7 @@ describe("poll", function () {
       }, 100);
     });
 
-    it.only("calls statusCallback if state is inProgress", function (done) {
+    it("calls statusCallback if state is inProgress", function (done) {
       var spyOne = sinon.spy();
       var spyTwo = sinon.spy();
       var fakePromiseOne = Q({ state: 'inProgress' })
