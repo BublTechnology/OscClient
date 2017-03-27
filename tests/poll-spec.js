@@ -1,6 +1,7 @@
 var poll = require('../lib/poll');
 var assert = require('assert');
 var sinon = require('sinon');
+var Q = require('Q');
 
 describe("poll", function () {
   describe("defaults", function () {
@@ -74,14 +75,10 @@ describe("poll", function () {
       }, 100);
     });
 
-    it("rejects promise if there is an error object on the response body", function(done) {
+    it.only("rejects promise if there is an error object on the response body", function(done) {
       var rejectSpy = sinon.spy();
       var resolveSpy = sinon.spy();
-      var fakePromiseOne = {
-        then: function (cb) {
-          cb({ body: { error: { message: 'bad error!' } } });
-        }
-      };
+      var fakePromiseOne = Q.reject({ error: { message: 'bad error!' } });
       var fakePromise = {
         then: function () {},
         reject: function () {
@@ -100,17 +97,13 @@ describe("poll", function () {
         assert.equal(rejectSpy.called, true);
         assert.equal(resolveSpy.called, false);
         done();
-      });
+      }, 100);
     });
 
-    it("calls statusCallback if state is inProgress", function (done) {
+    it.only("calls statusCallback if state is inProgress", function (done) {
       var spyOne = sinon.spy();
       var spyTwo = sinon.spy();
-      var fakePromiseOne = {
-        then: function (cb) {
-          cb({ body: { state: 'inProgress' } });
-        }
-      };
+      var fakePromiseOne = Q({ state: 'inProgress' })
       var fakeClient = {
         commandsStatus: sinon.stub().returns(fakePromiseOne)
       };
