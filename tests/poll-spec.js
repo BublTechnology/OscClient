@@ -88,7 +88,7 @@ describe("poll", function () {
           rejectSpy();
         },
         resolve: function () {
-          resoleSpy();
+          resolveSpy();
         }
       };
       var fakeClient = {
