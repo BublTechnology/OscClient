@@ -1,3 +1,5 @@
+/* global describe, it */
+
 var makeHttpRequest = require('../lib/makeHttpRequest');
 var assert = require('assert');
 

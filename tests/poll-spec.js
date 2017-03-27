@@ -1,3 +1,5 @@
+/* global describe, it */
+
 var poll = require('../lib/poll');
 var assert = require('assert');
 var sinon = require('sinon');
@@ -23,7 +25,7 @@ describe("poll", function () {
 
       poll.pollPeriod = 1;
       poll.commandStatus(fakeClient, 12, promise, Date.now(), null);
-      setTimeout(function(){
+      setTimeout(function () {
         assert.equal(fakeClient.commandsStatus.called, true);
         done();
       }, 100);
@@ -41,7 +43,7 @@ describe("poll", function () {
 
       poll.pollPeriod = 1;
       poll.commandStatus(fakeClient, 15, promise, Date.now(), null);
-      setTimeout(function(){
+      setTimeout(function () {
         assert(fakeClient.commandsStatus.calledWith(15));
         done();
       }, 100);
@@ -62,20 +64,20 @@ describe("poll", function () {
         then: function () {},
         reject: function () {},
         resolve: function () {
-            spyOne();
-          }
+          spyOne();
+        }
       };
 
       poll.pollPeriod = 1;
       poll.commandStatus(fakeClient, 15, fakePromiseTwo, Date.now(), spyTwo);
-      setTimeout(function(){
+      setTimeout(function () {
         assert.equal(spyOne.called, true);
         assert.equal(spyTwo.called, false);
         done();
       }, 100);
     });
 
-    it.only("rejects promise if there is an error object on the response body", function(done) {
+    it.only("rejects promise if there is an error object on the response body", function (done) {
       var rejectSpy = sinon.spy();
       var resolveSpy = sinon.spy();
       var fakePromiseOne = Q.reject({ error: { message: 'bad error!' } });
@@ -117,7 +119,7 @@ describe("poll", function () {
 
       poll.pollPeriod = 10;
       poll.commandStatus(fakeClient, 15, fakePromiseTwo, Date.now(), spyTwo);
-      setTimeout(function(){
+      setTimeout(function () {
         assert.equal(spyOne.called, false);
         assert.equal(spyTwo.called, true);
         done();
